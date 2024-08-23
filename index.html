@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Writing DOM</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app"></div>
+<script>
+  
+  const form = document.createElement('form');
+  
+  function createInputField(type, id, placeholder) {
+    const input = document.createElement('input');
+    input.type = type;
+    input.id = id;
+    input.placeholder = placeholder;
+    input.required = true; 
+    form.appendChild(input);
+    form.appendChild(document.createElement('br')); 
+  }
+  
+  createInputField('text', 'firstName', 'First Name');
+  createInputField('text', 'lastName', 'Last Name');
+  createInputField('email', 'email', 'Email Address');
+  createInputField('password', 'password', 'Password');
+  createInputField('password', 'confirmPassword', 'Confirm Password');
+  
+  const submitBtn = document.createElement('button');
+  submitBtn.type = 'submit';
+  submitBtn.textContent = 'Register';
+  form.appendChild(submitBtn);
+  
+  document.getElementById('app').appendChild(form);
+  
+  form.addEventListener('submit', function(event) {
+    event.preventDefault(); 
+    
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\.[a-zA-Z]{2,})?$/;
+    
+    if (!emailPattern.test(email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+    
+    if (password !== confirmPassword) {
+      alert('Passwords do not match.');
+      return;
+    }
+    
+    alert(`Registration Successful!\nName: ${firstName} ${lastName}\nEmail: ${email}`);
+  });
+</script>
+</body>
+</html>
